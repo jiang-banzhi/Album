@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Album</string>
+
+    <string name="all_images">所有图片</string>
+    <string name="all_videos">所有视频</string>
+    <string name="all_audios">所有音频</string>
+    <string name="all_images_videos">所有图片/视频</string>
+    <string name="all_images_audios">所有图片/音频</string>
+    <string name="all_audios_videos">所有音频/视频</string>
+    <string name="all_images_audios_videos">所有媒体文件</string>
+</resources>

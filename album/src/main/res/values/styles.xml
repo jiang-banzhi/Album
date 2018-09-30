@@ -1,0 +1,7 @@
+<resources>
+
+    <style name="loading_dialog_style" parent="Theme.AppCompat.Dialog">
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+</resources>
