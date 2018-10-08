@@ -11,6 +11,7 @@ import com.banzhi.album.bean.FileBean;
 import com.banzhi.album.bean.FolderBean;
 import com.banzhi.album.task.MediaReaderTask;
 import com.banzhi.album.ui.adapter.AlbumAdapter;
+import com.banzhi.album.ui.widget.AlbumDivider;
 import com.banzhi.album.utils.ScreenUtils;
 
 import java.util.ArrayList;
@@ -30,10 +31,11 @@ public class AlbumActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recyclerView);
         mLayoutManager = new GridLayoutManager(this, spanCount);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        int dividerWidth = 10;
+        int dividerWidth = ScreenUtils.dp2px(this,4);
         int itemSize = (ScreenUtils.getScreenWidth(this) - dividerWidth * (spanCount + 1)) / spanCount;
         albumAdapter = new AlbumAdapter(this, false, itemSize);
         mRecyclerView.setAdapter(albumAdapter);
+        mRecyclerView.addItemDecoration(new AlbumDivider(dividerWidth));
         mediaReaderTask = new MediaReaderTask(this, Album.MODE_IMAGES, scanCallback);
         mediaReaderTask.execute();
     }

@@ -129,9 +129,10 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
         private ImageView mIvImage;
-
+int itemSize;
         public ImageViewHolder(View itemView, boolean hasCamera, int itemSize) {
             super(itemView);
+            this.itemSize=itemSize;
             itemView.getLayoutParams().height = itemSize;
             itemView.getLayoutParams().width = itemSize;
             mIvImage = itemView.findViewById(R.id.iv_album_content_image);
