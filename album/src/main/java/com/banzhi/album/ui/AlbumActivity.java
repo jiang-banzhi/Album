@@ -10,6 +10,7 @@ import com.banzhi.album.R;
 import com.banzhi.album.bean.FileBean;
 import com.banzhi.album.bean.FolderBean;
 import com.banzhi.album.task.MediaReaderTask;
+import com.banzhi.album.task.ThumbTask;
 import com.banzhi.album.ui.adapter.AlbumAdapter;
 import com.banzhi.album.ui.widget.AlbumDivider;
 import com.banzhi.album.utils.ScreenUtils;
@@ -36,7 +37,7 @@ public class AlbumActivity extends AppCompatActivity {
         albumAdapter = new AlbumAdapter(this, false, itemSize);
         mRecyclerView.setAdapter(albumAdapter);
         mRecyclerView.addItemDecoration(new AlbumDivider(dividerWidth));
-        mediaReaderTask = new MediaReaderTask(this, Album.MODE_IMAGES, scanCallback);
+        mediaReaderTask = new MediaReaderTask(this, Album.MODE_AUDIOS, scanCallback);
         mediaReaderTask.execute();
     }
 
@@ -44,7 +45,14 @@ public class AlbumActivity extends AppCompatActivity {
         @Override
         public void onScanCallback(ArrayList<FolderBean> folderBeans) {
             ArrayList<FileBean> fileBeans = folderBeans.get(0).getFileBeans();
-            albumAdapter.notifyDataSetChanged(fileBeans);
+
+            ThumbTask thumbTask = new ThumbTask(AlbumActivity.this, new ThumbTask.ThumbCallback() {
+                @Override
+                public void onThumbCallback(ArrayList<FileBean> fileBeans) {
+                    albumAdapter.notifyDataSetChanged(fileBeans);
+                }
+            });
+            thumbTask.execute(fileBeans);
         }
     };
 }

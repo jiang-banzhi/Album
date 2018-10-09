@@ -75,13 +75,9 @@ public class MediaReader {
             MediaStore.Video.Media.DATA,
             MediaStore.Video.Media.DISPLAY_NAME,
             MediaStore.Video.Media.TITLE,
-            MediaStore.Video.Media.BUCKET_ID,
-            MediaStore.Video.Media.BUCKET_DISPLAY_NAME,
             MediaStore.Video.Media.MIME_TYPE,
             MediaStore.Video.Media.DATE_ADDED,
             MediaStore.Video.Media.DATE_MODIFIED,
-            MediaStore.Video.Media.LATITUDE,
-            MediaStore.Video.Media.LONGITUDE,
             MediaStore.Video.Media.SIZE,
             MediaStore.Video.Media.DURATION
     };
@@ -153,10 +149,10 @@ public class MediaReader {
     public void scanAudios(Map<String, FolderBean> folderMap, FolderBean allFileFolder) {
         ContentResolver contentResolver = mContext.getContentResolver();
         Cursor cursor = contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                AUDIOS,
                 null,
                 null,
-                MediaStore.Images.Media.DATE_ADDED);
+                null,
+                MediaStore.Audio.Media.DATE_ADDED);
         if (cursor != null) {
             while (cursor.moveToNext()) {
                 String path = cursor.getString(cursor.getColumnIndex(AUDIOS[0]));
@@ -166,42 +162,34 @@ public class MediaReader {
 
                 String name = cursor.getString(cursor.getColumnIndex(AUDIOS[1]));
                 String title = cursor.getString(cursor.getColumnIndex(AUDIOS[2]));
-                int bucketId = cursor.getInt(cursor.getColumnIndex(AUDIOS[3]));
-                String bucketName = cursor.getString(cursor.getColumnIndex(AUDIOS[4]));
-                String mimeType = cursor.getString(cursor.getColumnIndex(AUDIOS[5]));
-                long addDate = cursor.getLong(cursor.getColumnIndex(AUDIOS[6]));
-                long modifyDate = cursor.getLong(cursor.getColumnIndex(AUDIOS[7]));
-                float latitude = cursor.getFloat(cursor.getColumnIndex(AUDIOS[8]));
-                float longitude = cursor.getFloat(cursor.getColumnIndex(AUDIOS[9]));
-                long size = cursor.getLong(cursor.getColumnIndex(AUDIOS[10]));
-                long duration = cursor.getLong(cursor.getColumnIndex(AUDIOS[11]));
+                String mimeType = cursor.getString(cursor.getColumnIndex(AUDIOS[3]));
+                long addDate = cursor.getLong(cursor.getColumnIndex(AUDIOS[4]));
+                long modifyDate = cursor.getLong(cursor.getColumnIndex(AUDIOS[5]));
+                long size = cursor.getLong(cursor.getColumnIndex(AUDIOS[6]));
+                long duration = cursor.getLong(cursor.getColumnIndex(AUDIOS[7]));
 
                 FileBean fileBean = new FileBean();
-                fileBean.setMediaType(FileBean.TYPE_IMAGE);
+                fileBean.setMediaType(FileBean.TYPE_AUDIO);
                 fileBean.setPath(path);
                 fileBean.setName(name);
                 fileBean.setTitle(title);
-                fileBean.setBucketId(bucketId);
-                fileBean.setBucketName(bucketName);
                 fileBean.setMimeType(mimeType);
                 fileBean.setAddDate(addDate);
                 fileBean.setModifyDate(modifyDate);
-                fileBean.setLatitude(latitude);
-                fileBean.setLongitude(longitude);
                 fileBean.setSize(size);
-                fileBean.setSize(duration);
+                fileBean.setDuration(duration);
 
                 allFileFolder.addFileBean(fileBean);
-                FolderBean folderBean = folderMap.get(bucketName);
+                String parentName = file.getParentFile().getName();
+                FolderBean folderBean = folderMap.get(parentName);
                 if (folderBean == null) {
                     folderBean = new FolderBean();
-                    folderBean.setId(bucketId);
-                    folderBean.setName(bucketName);
+                    folderBean.setName(parentName);
                     folderBean.addFileBean(fileBean);
                 } else {
                     folderBean.addFileBean(fileBean);
                 }
-                folderMap.put(bucketName, folderBean);
+                folderMap.put(parentName, folderBean);
             }
             cursor.close();
         }

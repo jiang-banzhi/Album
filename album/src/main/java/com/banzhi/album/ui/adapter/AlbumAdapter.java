@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.banzhi.album.R;
 import com.banzhi.album.bean.FileBean;
+import com.banzhi.album.utils.AlubmUtils;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         mInflater = LayoutInflater.from(mContext);
 
     }
+
     public void notifyDataSetChanged(List<FileBean> albumFiles) {
         this.fileBeans = albumFiles;
         super.notifyDataSetChanged();
@@ -93,23 +96,23 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+        int camera = hasCamera ? 1 : 0;
+        position = holder.getAdapterPosition() - camera;
         switch (getItemViewType(position)) {
             case TYPE_BUTTON:
 
                 break;
             case TYPE_IMAGE:
                 ImageViewHolder imageHolder = (ImageViewHolder) holder;
-                int camera = hasCamera ? 1 : 0;
-                position = holder.getAdapterPosition() - camera;
-                FileBean fileBean = fileBeans.get(position);
-                imageHolder.setData(fileBean);
+                imageHolder.setData(fileBeans.get(position));
                 break;
             case TYPE_VIDEO:
-
+                VideoViewHolder videoHolder = (VideoViewHolder) holder;
+                videoHolder.setData(fileBeans.get(position));
                 break;
             case TYPE_AUDIO:
-
+                AudioViewHolder audioHolder = (AudioViewHolder) holder;
+                audioHolder.setData(fileBeans.get(position));
                 break;
             default:
 
@@ -129,10 +132,9 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private static class ImageViewHolder extends RecyclerView.ViewHolder {
         private ImageView mIvImage;
-int itemSize;
+
         public ImageViewHolder(View itemView, boolean hasCamera, int itemSize) {
             super(itemView);
-            this.itemSize=itemSize;
             itemView.getLayoutParams().height = itemSize;
             itemView.getLayoutParams().width = itemSize;
             mIvImage = itemView.findViewById(R.id.iv_album_content_image);
@@ -145,20 +147,38 @@ int itemSize;
     }
 
     private static class VideoViewHolder extends RecyclerView.ViewHolder {
+        private ImageView mIvImage;
+        private TextView mTvDuration;
 
         public VideoViewHolder(View itemView, boolean hasCamera, int itemSize) {
             super(itemView);
             itemView.getLayoutParams().height = itemSize;
             itemView.getLayoutParams().width = itemSize;
+            mIvImage = itemView.findViewById(R.id.iv_album_content_image);
+            mTvDuration = itemView.findViewById(R.id.tv_duration);
+        }
+
+        void setData(FileBean fileBean) {
+            Glide.with(mIvImage.getContext()).load(fileBean.getThumbPath()).into(mIvImage);
+            mTvDuration.setText(AlubmUtils.convertDuration(fileBean.getDuration()));
         }
     }
 
     private static class AudioViewHolder extends RecyclerView.ViewHolder {
+        private ImageView mIvImage;
+        private TextView mTvDuration;
 
         public AudioViewHolder(View itemView, boolean hasCamera, int itemSize) {
             super(itemView);
             itemView.getLayoutParams().height = itemSize;
             itemView.getLayoutParams().width = itemSize;
+            mIvImage = itemView.findViewById(R.id.iv_album_content_image);
+            mTvDuration = itemView.findViewById(R.id.tv_duration);
+        }
+
+        void setData(FileBean fileBean) {
+            Glide.with(mIvImage.getContext()).load(R.drawable.album_voice).into(mIvImage);
+            mTvDuration.setText(fileBean.getName());
         }
     }
 

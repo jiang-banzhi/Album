@@ -35,6 +35,19 @@
         </FrameLayout>
 
         <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_6"
+            android:layout_marginLeft="@dimen/dp_6"
+            android:layout_marginStart="@dimen/dp_6"
+            android:drawablePadding="@dimen/dp_4"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@android:color/white" />
+
+        <TextView
             android:id="@+id/tv_duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,9 +55,7 @@
             android:layout_marginBottom="@dimen/dp_6"
             android:layout_marginLeft="@dimen/dp_6"
             android:layout_marginStart="@dimen/dp_6"
-            android:drawableLeft="@drawable/album_tag_video_white"
             android:drawablePadding="@dimen/dp_4"
-            android:drawableStart="@drawable/album_tag_video_white"
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"

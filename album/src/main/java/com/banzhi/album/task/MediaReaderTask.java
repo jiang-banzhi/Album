@@ -58,7 +58,7 @@ public class MediaReaderTask extends AsyncTask<ArrayList<FileBean>, Void, ArrayL
                 allFolderBeans = reader.getAllVideos();
                 break;
             case Album.MODE_AUDIOS:
-                allFolderBeans = reader.getAllVideos();
+                allFolderBeans = reader.getAllAudios();
                 break;
             case Album.MODE_IMAGES_VIDEOS:
                 allFolderBeans = reader.getImagesAndVideos();
