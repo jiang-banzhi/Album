@@ -16,6 +16,6 @@
         android:layout_height="match_parent"
         android:background="?selectableItemBackground"
         android:scaleType="center"
-        android:src="@drawable/icon_add_photo" />
+        android:src="@drawable/album_add_photo" />
 
 </android.support.v7.widget.CardView>

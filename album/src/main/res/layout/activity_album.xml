@@ -10,9 +10,48 @@
         android:id="@+id/recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/frame_bottom_sheet"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <FrameLayout
+        android:id="@+id/frame_bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/album_sheetBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recyclerView">
+
+        <Button
+            android:id="@+id/btn_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|left"
+            android:background="@null"
+            android:drawablePadding="@dimen/dp_2"
+            android:drawableRight="@drawable/spinner"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:padding="@dimen/dp_2"
+            android:textColor="@color/album_white"
+            android:textSize="@dimen/sp_16" />
+
+        <Button
+            android:id="@+id/btn_preview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|right"
+            android:background="@null"
+            android:drawableLeft="@drawable/eye"
+            android:drawablePadding="@dimen/dp_2"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:maxWidth="@dimen/dp_200"
+            android:padding="@dimen/dp_2"
+            android:textColor="@color/album_white"
+            android:textSize="@dimen/sp_16" />
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>
